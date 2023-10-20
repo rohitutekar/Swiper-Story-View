@@ -1,0 +1,112 @@
+{
+  "stories": [
+    {
+      "name": "Travel Destinations",
+      "cards": [
+        {
+          "imageSrc": "https://picsum.photos/id/1021/500/850",
+          "cardTitle": "Paris, France"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/1019/500/850",
+          "cardTitle": "New York City, USA"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/1015/500/850",
+          "cardTitle": "Sydney, Australia",
+          "description": "Discover the iconic Sydney Opera House and the beautiful Bondi Beach."
+        }
+      ]
+    },
+    {
+      "name": "Nature Escapes",
+      "cards": [
+        {
+          "imageSrc": "https://picsum.photos/id/1032/500/850",
+          "cardTitle": "Yosemite National Park, USA"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/1040/500/850",
+          "cardTitle": "Banff National Park, Canada"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/1050/500/850",
+          "cardTitle": "Plitvice Lakes National Park, Croatia",
+          "description": "Explore the breathtaking waterfalls and crystal-clear lakes of Plitvice."
+        }
+      ]
+    },
+    {
+      "name": "Adventure Sports",
+      "cards": [
+        {
+          "imageSrc": "https://picsum.photos/id/1060/500/850",
+          "cardTitle": "Skydiving in Dubai, UAE"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/1070/500/850",
+          "cardTitle": "Surfing in Bali, Indonesia"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/1080/500/850",
+          "cardTitle": "Skiing in Whistler, Canada",
+          "description": "Experience world-class skiing and snowboarding in the picturesque Whistler resort."
+        }
+      ]
+    },
+    {
+      "name": "Cultural Experiences",
+      "cards": [
+        {
+          "imageSrc": "https://picsum.photos/id/390/500/850",
+          "cardTitle": "Kyoto, Japan"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/306/500/850",
+          "cardTitle": "Rome, Italy"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/123/500/850",
+          "cardTitle": "Machu Picchu, Peru",
+          "description": "Visit the ancient Inca citadel and marvel at its architectural wonders."
+        }
+      ]
+    },
+    {
+      "name": "Foodie Destinations",
+      "cards": [
+        {
+          "imageSrc": "https://picsum.photos/id/520/500/850",
+          "cardTitle": "Bangkok, Thailand"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/230/500/850",
+          "cardTitle": "Barcelona, Spain"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/440/500/850",
+          "cardTitle": "Istanbul, Turkey",
+          "description": "Savor the rich flavors of Turkish cuisine and explore the bustling markets."
+        }
+      ]
+    },
+    {
+      "name": "Relaxing Getaways",
+      "cards": [
+        {
+          "imageSrc": "https://picsum.photos/id/450/500/850",
+          "cardTitle": "Maldives"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/560/500/850",
+          "cardTitle": "Santorini, Greece"
+        },
+        {
+          "imageSrc": "https://picsum.photos/id/270/500/850",
+          "cardTitle": "Bora Bora, French Polynesia",
+          "description": "Unwind in an overwater bungalow surrounded by turquoise waters and white sand beaches."
+        }
+      ]
+    }
+  ]
+}
