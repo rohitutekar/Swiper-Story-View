@@ -32,16 +32,23 @@ fetch("./data.json")
         storySwipers[swiper.realIndex]?.el?.classList.add("spotlight-slide-visited");
       })
       .on("slideChange", function(swiper) {
+        if(!storySwipers[swiper.realIndex]) return;
+
         // Start and resume autoplay for the current nested Swiper
-        storySwipers[swiper.realIndex]?.autoplay?.start();
-        storySwipers[swiper.realIndex]?.autoplay?.resume();
+        storySwipers[swiper.realIndex].autoplay.start();
+        storySwipers[swiper.realIndex].autoplay.resume();
+        storySwipers[swiper.realIndex].keyboard.enabled = true;
         
         // Mark the current slide as visited
-        storySwipers[swiper.realIndex]?.el?.classList.add("spotlight-slide-visited");
+        storySwipers[swiper.realIndex].el.classList.add("spotlight-slide-visited");
       })
       .on("beforeSlideChangeStart", function(swiper) {
-        // Stop autoplay for both previous and current nested Swipers
-        storySwipers[swiper.previousRealIndex]?.autoplay?.stop();
+        const previousSlide = storySwipers[swiper.previousRealIndex ?? swiper.previousIndex];
+        if(previousSlide) {
+          // Stop autoplay for both previous and current nested Swipers
+          previousSlide.autoplay.stop();
+          previousSlide.keyboard.enabled = false;
+        }
         storySwipers[swiper.realIndex]?.autoplay?.stop();
       });
 
@@ -64,7 +71,7 @@ fetch("./data.json")
       if(!spotlightSwiper.initialized) {
         spotlightSwiper.init();
       }
-      spotlightSwiper.slideTo(swiper.clickedIndex);
+      spotlightSwiper.slideToLoop(swiper.clickedIndex);
       storySwipers[swiper.clickedIndex]?.autoplay?.resume();
     });
 
@@ -103,7 +110,12 @@ fetch("./data.json")
           .on("slideNextTransitionStart", function(swiper) {
             // Move to the next slide in the main Swiper when the last slide of the nested Swiper is reached
             if (swiper.realIndex === 0) {
-              spotlightSwiper.slideNext();
+              if(!spotlightSwiper.loopedSlides && spotlightSwiper.realIndex === spotlightSwiper.slides.length - 1) {
+                spotlightContainerPopupElement.classList.remove("active")
+                storySwipers[swiper.realIndex]?.autoplay?.stop();
+              } else {
+                spotlightSwiper.slideNext();
+              }
             }
           })
           .on("slidePrevTransitionStart", function(swiper) {
