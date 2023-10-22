@@ -2,15 +2,16 @@
 fetch("./data.json")
   .then((data) => data.json())
   .then((data) => {
+    const storySwipers = [], autoplayDelay = 3000;
+    const spotlightSliderElement = document.querySelector(".spotlight-slider");
     const spotlightContainerElement = document.querySelector(".spotlight-container");
-    spotlightContainerElement.innerHTML = generateHTML(data);
-
-    const storySwipers = [],
-      autoplayDelay = 3000;
+    const spotlightContainerPopupElement = document.querySelector(".spotlight-container").parentElement;
+    spotlightSliderElement.innerHTML = generateSpotlightSliderHtml(data);
+    spotlightContainerElement.innerHTML = generateSpotlightContainerHtml(data);
 
     // Initialize the main Swiper (spotlightSwiper)
     const spotlightSwiper = new Swiper(spotlightContainerElement, {
-        loop: true,
+        loop: false,
         init: false,
         autoplay: false,
         slidesPerView: 1,
@@ -30,7 +31,7 @@ fetch("./data.json")
         initializeSpotlightStories(spotlightContainerElement);
         storySwipers[swiper.realIndex]?.el?.classList.add("spotlight-slide-visited");
       })
-      .on("slideChangeTransitionEnd", function(swiper) {
+      .on("slideChange", function(swiper) {
         // Start and resume autoplay for the current nested Swiper
         storySwipers[swiper.realIndex]?.autoplay?.start();
         storySwipers[swiper.realIndex]?.autoplay?.resume();
@@ -38,21 +39,41 @@ fetch("./data.json")
         // Mark the current slide as visited
         storySwipers[swiper.realIndex]?.el?.classList.add("spotlight-slide-visited");
       })
-      .on("slideChangeTransitionStart", function(swiper) {
+      .on("beforeSlideChangeStart", function(swiper) {
         // Stop autoplay for both previous and current nested Swipers
         storySwipers[swiper.previousRealIndex]?.autoplay?.stop();
         storySwipers[swiper.realIndex]?.autoplay?.stop();
       });
 
-    // Initialize the main Swiper
-    spotlightSwiper.init();
+    new Swiper(spotlightSliderElement, {
+      loop: false,
+      autoplay: false,
+      slidesPerView: 2.5,
+      spaceBetween: 30,
+      breakpoints: {
+        768: {
+          slidesPerView: 4.5,
+        },
+        1366: {
+          slidesPerView: 6.5,
+        },
+      },
+    }).on('click', function(swiper) {
+      // Initialize the main Swiper
+      spotlightContainerPopupElement.classList.add("active");
+      if(!spotlightSwiper.initialized) {
+        spotlightSwiper.init();
+      }
+      spotlightSwiper.slideTo(swiper.clickedIndex);
+      storySwipers[swiper.clickedIndex]?.autoplay?.resume();
+    });
 
     // Function to initialize nested Swipers (storySwipers)
     function initializeSpotlightStories(spotlightContainer) {
       [
         ...spotlightContainer.getElementsByClassName("spotlight-slide"),
-      ].forEach((spotlightSlide) => {
-        const realSlideIndex = spotlightSlide.getAttribute("data-swiper-slide-index");
+      ].forEach((spotlightSlide, index) => {
+        const realSlideIndex = spotlightSlide.getAttribute("data-swiper-slide-index") ?? index;
 
         // Initialize nested Swiper (storySwiper)
         storySwipers[realSlideIndex] = new Swiper(
@@ -103,20 +124,45 @@ fetch("./data.json")
         storySwipers[realSlideIndex].init();
       });
     }
+
+    // Handle popup close
+    spotlightContainerPopupElement.querySelector(".close").addEventListener("click", () => {
+      spotlightContainerPopupElement.classList.remove("active")
+      storySwipers[spotlightSwiper.realIndex]?.autoplay?.stop();
+    });
   });
 
 // Function to generate HTML from JSON data
-function generateHTML(data) {
-  let html = '<div class="swiper-wrapper">';
+function generateSpotlightSliderHtml(data) {
+  let spotlightSliderHtml = '<div class="swiper-wrapper">';
 
   data?.stories?.forEach(storyBlock => {
-    html += `<div class="swiper-slide spotlight-slide">
+    spotlightSliderHtml += `<div class="swiper-slide spotlight-slide">
+      <div class="spotlight-card">
+        <div class="image"><img src="${storyBlock.image}" alt="" /></div>
+        <div class="title">${storyBlock.name}</div>
+      </div>
+    </div>`;
+  });
+
+  spotlightSliderHtml += `</div>`;
+
+  return spotlightSliderHtml;
+}
+
+// Function to generate HTML from JSON data
+function generateSpotlightContainerHtml(data) {
+  let spotlightContainerHtml = '<div class="swiper-wrapper">';
+
+  data?.stories?.forEach(storyBlock => {
+    spotlightContainerHtml += `<div class="swiper-slide spotlight-slide">
+      <div class="title">${storyBlock.name}</div>
       <div class="story-container">
         <div class="swiper-wrapper">`;
 
     storyBlock.cards.forEach((card) => {
-      html += `<div class="swiper-slide">
-          <div class="card">
+      spotlightContainerHtml += `<div class="swiper-slide">
+          <div class="story-card">
             <div class="card-image">
               <img src="${card.imageSrc}" alt="" />
             </div>
@@ -124,15 +170,15 @@ function generateHTML(data) {
               <h3 class="card-title">${card.cardTitle}</h3>`;
 
       if (card.description) {
-        html += `<p class="description">${card.description}</p>`;
+        spotlightContainerHtml += `<p class="description">${card.description}</p>`;
       }
 
-      html += `</div>
+      spotlightContainerHtml += `</div>
           </div>
         </div>`;
     });
 
-    html += `</div>
+    spotlightContainerHtml += `</div>
         <div class="swiper-pagination"></div>
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
@@ -140,7 +186,7 @@ function generateHTML(data) {
     </div>`;
   });
 
-  html += `</div>`;
+  spotlightContainerHtml += `</div>`;
 
-  return html;
+  return spotlightContainerHtml;
 }

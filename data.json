@@ -2,6 +2,7 @@
   "stories": [
     {
       "name": "Travel Destinations",
+      "image": "https://picsum.photos/id/1021/200",
       "cards": [
         {
           "imageSrc": "https://picsum.photos/id/1021/500/850",
@@ -20,6 +21,7 @@
     },
     {
       "name": "Nature Escapes",
+      "image": "https://picsum.photos/id/1032/200",
       "cards": [
         {
           "imageSrc": "https://picsum.photos/id/1032/500/850",
@@ -38,6 +40,7 @@
     },
     {
       "name": "Adventure Sports",
+      "image": "https://picsum.photos/id/1060/200",
       "cards": [
         {
           "imageSrc": "https://picsum.photos/id/1060/500/850",
@@ -56,6 +59,7 @@
     },
     {
       "name": "Cultural Experiences",
+      "image": "https://picsum.photos/id/390/200",
       "cards": [
         {
           "imageSrc": "https://picsum.photos/id/390/500/850",
@@ -74,6 +78,7 @@
     },
     {
       "name": "Foodie Destinations",
+      "image": "https://picsum.photos/id/520/200",
       "cards": [
         {
           "imageSrc": "https://picsum.photos/id/520/500/850",
@@ -92,6 +97,7 @@
     },
     {
       "name": "Relaxing Getaways",
+      "image": "https://picsum.photos/id/450/200",
       "cards": [
         {
           "imageSrc": "https://picsum.photos/id/450/500/850",
