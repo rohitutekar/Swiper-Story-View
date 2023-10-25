@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 
 // Colors
-$-color-bullets: #ababab;
+$-color-bullets: rgba(255, 255, 255, 0.5);
 $-color-active-bullets: #fff;
 $-color-gradient-primary: linear-gradient(45deg, #FF9800, #E91E63, #673AB7);
 
@@ -186,15 +186,19 @@ body {
         border-radius: 4px;
         position: relative;
         overflow: hidden;
+
+        &:only-child {
+          display: inline-block !important; 
+        }
       }
 
       // Show progress on currently active pagination bullet
       .swiper-pagination-bullet-active::after {
         content: '';
-        background: $-color-bullets;
+        background: $-color-active-bullets; 
         position: absolute;
         inset: 0;
-        transform-origin: right top;
+        transform-origin: left top;
         transform: scale(var(--story-progress, 1), 1);
       }
     }
@@ -202,9 +206,8 @@ body {
     // Select active pagination bullet and all previous bullets
     &.spotlight-slide-visited
       .swiper-pagination-bullets
-      :is(.swiper-pagination-bullet-active, 
-      .swiper-pagination-bullet:has(~ .swiper-pagination-bullet-active)) {
-      background: #fff; 
+      .swiper-pagination-bullet:has(~ .swiper-pagination-bullet-active) {
+      background: $-color-active-bullets; 
     }
 
     // Story slider - Navigation

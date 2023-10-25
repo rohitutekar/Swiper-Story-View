@@ -11,7 +11,7 @@ fetch("./data.json")
 
     // Initialize the main Swiper (spotlightSwiper)
     const spotlightSwiper = new Swiper(spotlightContainerElement, {
-        loop: false,
+        loop: true,
         init: false,
         autoplay: false,
         slidesPerView: 1,
@@ -124,12 +124,18 @@ fetch("./data.json")
               spotlightSwiper.slidePrev();
             }
           })
-          .on("autoplayTimeLeft", function(swiper, timeLeft, progress) {
+          .on("autoplayTimeLeft", function(_, timeLeft, progress) {
             // Update the story progress using a CSS variable
+            console.log(timeLeft)
             document.body.style.setProperty(
               "--story-progress",
-              isNaN(progress) ? 0 : progress.toFixed(3)
+              isNaN(progress) || progress < 0 ? 1 : 1 - progress.toFixed(3)
             );
+
+            // if(swiper.slides.length === 1 && progress.toFixed(2) < 0) {
+            //   spotlightSwiper.slideNext();
+            //   swiper.autoplay.stop();
+            // }
           });
 
         // Initialize the nested Swiper
